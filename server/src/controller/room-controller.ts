@@ -1,7 +1,6 @@
 import * as express from 'express'
 import { BaseController } from './base-controller'
-import { Room } from '../model/room'
-import { Player } from '../model/player';
+import { Room, Player, PlayerPosition } from '../model'
 import { Response, Request } from 'express';
 
 export class RoomController extends BaseController {
@@ -20,8 +19,8 @@ export class RoomController extends BaseController {
     getAllRooms(req: Request, res: Response) {
         res.status(200).json([
             new Room('1', 'Room 1'),
-            new Room('2', 'Room 2', [new Player('1', 'Player 1')]),
-            new Room('3', 'Room 3', [new Player('2', 'Player 2'), new Player('3', 'Player 3'), new Player('4', 'Player 4'), new Player('5', 'Player 5')]),
+            new Room('2', 'Room 2', [new Player('1', 'Player 1', new PlayerPosition(0, 0))]),
+            new Room('3', 'Room 3', [new Player('2', 'Player 2', new PlayerPosition(0, 0)), new Player('3', 'Player 3', new PlayerPosition(0, 0)), new Player('4', 'Player 4', new PlayerPosition(0, 0)), new Player('5', 'Player 5', new PlayerPosition(0, 0))]),
             new Room('4', 'Room 4'),
         ])
     }
@@ -34,8 +33,8 @@ export class RoomController extends BaseController {
     getRoomById(req: Request, res: Response) {
         let result = [
             new Room('1', 'Room 1'),
-            new Room('2', 'Room 2', [new Player('1', 'Player 1')]),
-            new Room('3', 'Room 3', [new Player('2', 'Player 2'), new Player('3', 'Player 3'), new Player('4', 'Player 4'), new Player('5', 'Player 5')]),
+            new Room('2', 'Room 2', [new Player('1', 'Player 1', new PlayerPosition(0, 0))]),
+            new Room('3', 'Room 3', [new Player('2', 'Player 2', new PlayerPosition(0, 0)), new Player('3', 'Player 3', new PlayerPosition(0, 0)), new Player('4', 'Player 4', new PlayerPosition(0, 0)), new Player('5', 'Player 5', new PlayerPosition(0, 0))]),
             new Room('4', 'Room 4'),
         ].find((room: Room) => {
             return room.id === req.params.id
