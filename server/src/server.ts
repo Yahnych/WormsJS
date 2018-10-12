@@ -18,8 +18,8 @@ registerRoutesFromControllers(app)
 
 // let game: WormsGame = null
 
-const server = app.listen(8080, 'localhost', () => {
-    console.log('App listening on http://127.0.0.1:8080')
+const server = app.listen(8080, '0.0.0.0', () => {
+    console.log('App listening on http://0.0.0.0:8080')
     // game = new WormsGame()
 })
 
