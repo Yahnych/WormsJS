@@ -1,11 +1,27 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1>
     Welcome to {{ title }}!
   </h1>
   <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 </div>
-<button *ngFor="let room of rooms" (click)="joinRoom(room.id)">Rejoindre {{room.name}}</button>
-<button (click)="becomePlayer('1')">Become player 1</button>
-<button (click)="becomePlayer('2')">Become player 2</button>
-<button (click)="moveLeft()">Move left</button>
+<form [formGroup]="loginForm" *ngIf="!isLogged">
+  <label for="username">
+    Username:
+  </label>
+  <input type="text" id="username" formControlName="username" />
+  <label for="room">
+    Room:
+  </label>
+  <select id="room" formControlName="room">
+    <option *ngFor="let room of rooms" [value]="room.id">{{room.name}} {{room.players.length}}/4</option>
+  </select>
+  <button (click)="onSubmit()">PLAY!</button>
+</form>
+<ng-container *ngIf="isLogged">
+  <div class="card">
+    <div class="card-header">Players ({{rooms[joinedRoom].players.length}} / 4)</div>
+    <div class="card-body">
+      <worms-player-list [players]="rooms[joinedRoom].players"></worms-player-list>
+    </div>
+  </div>
+</ng-container>

@@ -1,16 +1,16 @@
 import { Player } from './player'
 
 export class Room {
-    id: string = ''
-    name: string = ''
-    players: Player[] = []
+  id: number;
+  name: string = '';
+  players: Player[] = [];
 
-    constructor(id?: string, name?: string, players?: Player[]) {
-        if (id)
-            this.id = id
-        if (name)
-            this.name = name
-        if (players)
-            this.players = players
-    }
+  constructor(id?: number, name?: string, players?: Player[]) {
+    if (id)
+      this.id = id;
+    if (name)
+      this.name = name;
+    if (players)
+      this.players = players;
+  }
 }
