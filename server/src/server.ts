@@ -2,7 +2,8 @@ import * as express from 'express';
 import * as cors from 'cors';
 import * as socketio from 'socket.io';
 
-import { Player, Weapon, Direction, Room } from './model';
+import {Direction, Player, Room, Weapon} from './model';
+import {WormsTeamEnum} from "./enum/worms-team-enum";
 
 const app: express.Application = express();
 
@@ -32,7 +33,8 @@ io.on('connection', (socket: socketio.Socket) => {
     });
 
     socket.on('roomJoin', (id: number, joinedPlayerName: string) => {
-        let joinedPlayer: Player = new Player(joinedPlayerName);
+        const joinedPlayer: Player = new Player(joinedPlayerName);
+        let joinedTeam: WormsTeamEnum;
         console.log(id);
         console.log(joinedPlayer.name + ' just joined room ' + rooms[id].name);
 
@@ -40,20 +42,59 @@ io.on('connection', (socket: socketio.Socket) => {
             joinedPlayer.id = nextPlayerId++;
             rooms[id].players.push(joinedPlayer);
 
+            socket.emit('userConnected', joinedPlayer.id);
+
             io.emit('rooms', rooms);
-            let socketRoomName: string = `room${id}`;
+            const socketRoomName: string = `room${id}`;
             socket.join(socketRoomName, () => {
 
                 socket.on('disconnect', () => {
-                    rooms[id].players.splice(getPlayerIndex(id, joinedPlayer), 1);
+                    disconnectUser(id, joinedPlayer, joinedTeam);
                     io.emit('rooms', rooms);
                     io.to(socketRoomName).emit('userDisconnected', joinedPlayer);
+                });
+
+                socket.on('teamSelect', (team: WormsTeamEnum, player: Player) => {
+                    let index: number;
+                    switch (team) {
+                        case WormsTeamEnum.BLUE_TEAM:
+                            if (rooms[id].blueTeam.findIndex((p) => {
+                                return p.id === player.id
+                            }) === -1) {
+                                rooms[id].blueTeam.push(player);
+                            }
+                            index = rooms[id].redTeam.findIndex((p) => {
+                                return p.id === player.id
+                            });
+                            if (index !== -1) {
+                                rooms[id].redTeam.splice(index, 1)
+                            }
+                            break;
+                        case WormsTeamEnum.RED_TEAM:
+                            if (rooms[id].redTeam.findIndex((p) => {
+                                return p.id === player.id
+                            }) === -1) {
+                                rooms[id].redTeam.push(player);
+                            }
+                            index = rooms[id].blueTeam.findIndex((p) => {
+                                return p.id === player.id
+                            });
+                            if (index !== -1) {
+                                rooms[id].blueTeam.splice(index, 1)
+                            }
+                            break;
+                    }
+                    joinedTeam = team;
+                    io.to(socketRoomName).emit('roomUpdate', rooms[id]);
                 });
 
                 io.to(socketRoomName).emit('newUser', joinedPlayer);
 
                 socket.on('move', (direction: Direction) => {
-                    rooms[id].players[getPlayerIndex(id, joinedPlayer)].move(direction);
+                    let index = rooms[id].players.findIndex((p: Player) => {
+                        return p.id === joinedPlayer.id;
+                    });
+                    rooms[id].players[index].move(direction);
                     io.to(socketRoomName).emit('roomUpdate', rooms[id]);
                 });
 
@@ -69,6 +110,20 @@ io.on('connection', (socket: socketio.Socket) => {
     });
 });
 
-function getPlayerIndex(roomId: number, playerToFind: Player): number {
-    return rooms[roomId].players.findIndex((player) => { return player.id === playerToFind.id })
+function disconnectUser(roomId: number, playerToDisconnect: Player, team?: WormsTeamEnum): void {
+    switch (team) {
+        case WormsTeamEnum.BLUE_TEAM:
+            rooms[roomId].blueTeam.splice(rooms[roomId].blueTeam.findIndex((p: Player) => {
+                return p.id === playerToDisconnect.id;
+            }), 1);
+            break;
+        case WormsTeamEnum.RED_TEAM:
+            rooms[roomId].redTeam.splice(rooms[roomId].redTeam.findIndex((p: Player) => {
+                return p.id === playerToDisconnect.id;
+            }), 1);
+            break;
+    }
+    rooms[roomId].players.splice(rooms[roomId].players.findIndex((p: Player) => {
+        return p.id === playerToDisconnect.id;
+    }), 1);
 }

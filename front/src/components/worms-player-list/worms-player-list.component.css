@@ -1,0 +1,21 @@
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#blueTeam {
+  width: 40%;
+  height: 20%;
+  background-color: lightskyblue;
+}
+
+#redTeam {
+  width: 40%;
+  height: 20%;
+  background-color: red;
+}
+
+mat-card-actions > button {
+  margin: 0;
+}

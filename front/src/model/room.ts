@@ -4,6 +4,8 @@ export class Room {
   id: number;
   name: string = '';
   players: Player[] = [];
+  blueTeam: Player[] = [];
+  redTeam: Player[] = [];
 
   constructor(id?: number, name?: string, players?: Player[]) {
     if (id)

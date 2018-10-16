@@ -3,9 +3,9 @@ import { Direction } from "./direction";
 
 export class Player {
 
-    id: number;
-    name: string = '';
-    position: PlayerPosition = new PlayerPosition(0, 0);
+    public id: number;
+    public name = '';
+    public position: PlayerPosition = new PlayerPosition(0, 0);
 
     constructor(name: string) {
         this.name = name;
