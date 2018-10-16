@@ -281,6 +281,7 @@
         <test-name value="AppComponent" />
         <test-name value="should create the app" />
       </test-names>
+      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
