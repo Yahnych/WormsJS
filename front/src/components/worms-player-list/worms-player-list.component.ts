@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import {Input} from "@angular/core";
+import {Player} from "../../model";
 
 @Component({
   selector: 'worms-player-list',
   templateUrl: './worms-player-list.component.html',
   styleUrls: ['./worms-player-list.component.css']
 })
-export class WormsPlayerListComponent implements OnInit {
+export class WormsPlayerListComponent {
 
-  constructor() { }
+  @Input() public players: Player[];
 
-  ngOnInit() {
+  constructor() {
+
   }
+
 
 }

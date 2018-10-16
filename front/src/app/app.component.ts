@@ -14,8 +14,8 @@ export class AppComponent implements OnInit {
   rooms: Room[];
   joinedRoom: number;
   player: Player;
+  public isLogged: boolean = false;
   private socket;
-  private isLogged: boolean = false;
   constructor(public fb: FormBuilder) {
     this.socket = io('http://localhost:8080/');
     this.socket.on('rooms', (rooms: Room[]) => {
