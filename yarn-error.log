@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Applications\nodejs\node.exe C:\Applications\Yarn\bin\yarn.js build
+  C:\Applications\nodejs\node.exe C:\Applications\Yarn\bin\yarn.js postinstall
 
 PATH: 
   C:\Applications\Java\openjdk-1.8.0.111-1;C:\Applications\cmder\bin;C:\Applications\cmder\vendor\git-for-windows\cmd;C:\Applications\cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\Applications\cmder\vendor\conemu-maximus5;C:\Applications\cmder\vendor\conemu-maximus5\ConEmu;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\idmu\common;C:\Program Files\Imprimerie Nationale\PKI\bin;c:\Program Files\SafeNet\Authentication\SAC\x32;c:\Program Files\SafeNet\Authentication\SAC\x64;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Applications\Java\openjdk-1.8.0.111-1\bin;C:\Applications\CloudFoundry;C:\Applications\nodejs\;C:\Applications\Yarn\bin\;C:\Applications\Microsoft VS Code\bin;C:\Users\CJRL6467\AppData\Roaming\npm;C:\Users\CJRL6467\AppData\Local\Yarn\bin;C:\Users\CJRL6467\AppData\Local\GitHubDesktop\bin;C:\Applications\cmder\vendor\git-for-windows\cmd;C:\Applications\cmder\vendor\git-for-windows\mingw64;C:\Applications\cmder\vendor\git-for-windows\usr\bin;C:\Applications\cmder
@@ -20,7 +20,8 @@ npm manifest:
     "description": "WormsJS Game Server",
     "main": "index.js",
     "scripts": {
-      "build": "tsc",
+      "postinstall": "yarn build",
+      "build": "tsc && cd front && ng build --prod --aot",
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": "git+https://github.com/alaborderie/WormsJS.git",
@@ -991,7 +992,7 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: C:\Windows\system32\cmd.exe
-  Arguments: /d /s /c tsc
+  Arguments: /d /s /c yarn build
   Directory: C:\Users\CJRL6467\Perso\Projects\WormsJS
   Output:
   
