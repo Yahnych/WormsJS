@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   joinedRoom: number;
   player: Player;
   public isLogged: boolean = false;
+  public isPlaying: boolean = false;
   private socket;
   constructor(public fb: FormBuilder) {
     this.socket = io('http://localhost:8080/');
@@ -52,5 +53,9 @@ export class AppComponent implements OnInit {
 
   public onTeamSelect(team: WormsTeamEnum): void {
     this.socket.emit('teamSelect', team, this.player);
+  }
+
+  public onPlayButton(): void {
+    this.isPlaying = true;
   }
 }
