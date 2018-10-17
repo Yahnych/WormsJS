@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   private socket;
 
   constructor(public fb: FormBuilder) {
-    this.socket = io('http://localhost:8080');
+    this.socket = io();
     this.socket.on('rooms', (rooms: Room[]) => {
       this.rooms = rooms;
       console.log(this.rooms);
