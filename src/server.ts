@@ -9,9 +9,9 @@ const app: express.Application = express();
 
 app.use(cors());
 
-const server = app.listen(8080, 'localhost', () => {
-    console.log('App listening on http://127.0.0.1:8080');
-});
+app.use(express.static(__dirname + '/front'));
+
+const server = app.listen(process.env.PORT || 8080);
 
 const io: socketio.Server = socketio(server);
 

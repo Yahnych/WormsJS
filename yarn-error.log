@@ -20,7 +20,7 @@ npm manifest:
     "description": "WormsJS Game Server",
     "main": "index.js",
     "scripts": {
-      "build": "rm -rf build && tsc",
+      "build": "tsc",
       "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": "git+https://github.com/alaborderie/WormsJS.git",
@@ -991,8 +991,8 @@ Trace:
   Error: Command failed.
   Exit code: 1
   Command: C:\Windows\system32\cmd.exe
-  Arguments: /d /s /c rm -rf build && tsc
-  Directory: C:\Users\CJRL6467\Perso\Projects\WormsJS\server
+  Arguments: /d /s /c tsc
+  Directory: C:\Users\CJRL6467\Perso\Projects\WormsJS
   Output:
   
       at ProcessTermError.MessageError (C:\Applications\Yarn\lib\cli.js:186:110)
