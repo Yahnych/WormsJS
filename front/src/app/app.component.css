@@ -7,3 +7,21 @@
   width: 50%;
   margin: auto;
 }
+
+#messages {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 400px;
+  width: 300px;
+}
+
+#messages > mat-card-actions {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+#messages > mat-card-actions {
+  right: 0;
+}

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import * as io from 'socket.io-client'
-import { Player, Room } from '../model';
+import {Player, Room} from '../model';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WormsTeamEnum} from "../enum/worms-team-enum";
 
@@ -11,15 +11,18 @@ import {WormsTeamEnum} from "../enum/worms-team-enum";
 })
 export class AppComponent implements OnInit {
   loginForm: FormGroup;
+  messagesForm: FormGroup;
   title = 'WormsJS';
   rooms: Room[];
   joinedRoom: number;
   player: Player;
   public isLogged: boolean = false;
   public isPlaying: boolean = false;
+  public messages: string[] = ["Test", "test2"];
   private socket;
+
   constructor(public fb: FormBuilder) {
-    this.socket = io();
+    this.socket = io('http://localhost:8080');
     this.socket.on('rooms', (rooms: Room[]) => {
       this.rooms = rooms;
       console.log(this.rooms);
@@ -36,6 +39,9 @@ export class AppComponent implements OnInit {
       username: ['', Validators.required],
       room: [null, Validators.required]
     });
+    this.messagesForm = this.fb.group({
+      message: ''
+    });
   }
 
   public onSubmit(): void {
@@ -48,7 +54,10 @@ export class AppComponent implements OnInit {
     this.isLogged = true;
     this.socket.on('roomUpdate', (room: Room) => {
       this.rooms[room.id] = room;
-    })
+    });
+    this.socket.on('messageReceived', (message: string) => {
+      this.messages.push(message);
+    });
   }
 
   public onTeamSelect(team: WormsTeamEnum): void {
@@ -57,5 +66,13 @@ export class AppComponent implements OnInit {
 
   public onPlayButton(): void {
     this.isPlaying = true;
+  }
+
+  public sendMessage(): void {
+    let message: string = this.messagesForm.get('message').value;
+    if (message.length > 0) {
+      this.socket.emit('messageSent', message, this.player);
+      this.messagesForm.get('message').reset();
+    }
   }
 }

@@ -23,6 +23,30 @@
   [redTeam]="rooms[joinedRoom].redTeam"
   [blueTeam]="rooms[joinedRoom].blueTeam"
   (teamSelect)="onTeamSelect($event)"></worms-player-list>
+
+  <mat-card *ngIf="isLogged" id="messages">
+    <mat-card-header>
+      <mat-card-title>
+        <h3>Messages</h3>
+      </mat-card-title>
+    </mat-card-header>
+    <hr />
+    <mat-card-content>
+      <mat-list dense>
+        <mat-list-item *ngFor="let message of messages">
+          <p matLine>{{message}}</p>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+      <form [formGroup]="messagesForm" (ngSubmit)="sendMessage()">
+        <mat-form-field>
+      <input type="text" matInput formControlName="message" placeholder="Entrez votre message ..." />
+        </mat-form-field>
+        <button mat-button type="submit">ENVOYER</button>
+      </form>
+    </mat-card-actions>
+  </mat-card>
 <!--<worms-game-->
   <!--*ngIf="isPlaying"-->
   <!--[player]="player"-->

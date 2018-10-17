@@ -54,6 +54,10 @@ io.on('connection', (socket: socketio.Socket) => {
                     io.to(socketRoomName).emit('userDisconnected', joinedPlayer);
                 });
 
+                socket.on('messageSent', (message: string, player: Player) => {
+                    io.to(socketRoomName).emit('messageReceived', `${player.name}: ${message}`);
+                });
+
                 socket.on('teamSelect', (team: WormsTeamEnum, player: Player) => {
                     let index: number;
                     switch (team) {
