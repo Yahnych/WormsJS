@@ -4,8 +4,9 @@
   "description": "WormsJS Game Server",
   "main": "index.js",
   "scripts": {
-    "postinstall": "yarn build",
-    "build": "tsc && cd front && ng build --prod --aot && cd ../",
+    "postinstall": "yarn install-front && yarn build",
+    "install-front": "cd front && yarn && cd ../",
+    "build": "tsc && cd front && ./node_modules/.bin/ng build --prod --aot && cd ../",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": "git+https://github.com/alaborderie/WormsJS.git",

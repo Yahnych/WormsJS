@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4ba2f5ce-26d5-49fd-b5d9-cb18f1d2dac1" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -42,7 +40,7 @@
           <entry key="Procfile" value="26" />
           <entry key="css" value="189" />
           <entry key="html" value="668" />
-          <entry key="json" value="188" />
+          <entry key="json" value="289" />
           <entry key="ts" value="2271" />
         </counts>
       </usages-collector>
@@ -50,7 +48,7 @@
         <counts>
           <entry key="CSS" value="189" />
           <entry key="HTML" value="668" />
-          <entry key="JSON" value="85" />
+          <entry key="JSON" value="186" />
           <entry key="PLAIN_TEXT" value="26" />
           <entry key="TypeScript" value="2271" />
           <entry key="tsconfig" value="103" />
@@ -144,8 +142,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="7" column="64" selection-start-line="7" selection-start-column="64" selection-end-line="7" selection-end-column="64" />
+            <state relative-caret-position="138">
+              <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -252,6 +250,11 @@
               <item name="WormsJS" type="462c0819:PsiDirectoryNode" />
               <item name="build" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="WormsJS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WormsJS" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -327,12 +330,12 @@
       <workItem from="1539622510360" duration="1707000" />
       <workItem from="1539669674555" duration="1789000" />
       <workItem from="1539774484186" duration="133000" />
-      <workItem from="1539774638614" duration="2418000" />
+      <workItem from="1539774638614" duration="2577000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16163000" />
+    <option name="totallyTimeSpent" value="16322000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-1160" width="1096" height="1936" extended-state="6" />
@@ -546,8 +549,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="7" column="64" selection-start-line="7" selection-start-column="64" selection-end-line="7" selection-end-column="64" />
+        <state relative-caret-position="138">
+          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
         </state>
       </provider>
     </entry>
