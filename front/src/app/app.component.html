@@ -25,7 +25,7 @@
   (teamSelect)="onTeamSelect($event)"></worms-player-list>
 
   <mat-card *ngIf="isLogged" id="messages">
-    <mat-card-header>
+    <mat-card-header (click)="openCloseMessages()">
       <mat-card-title>
         <h3>Messages</h3>
       </mat-card-title>

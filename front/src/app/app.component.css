@@ -14,6 +14,7 @@
   bottom: 0;
   height: 400px;
   width: 300px;
+  transition: height 0.5s ease-in;
 }
 
 #messages > mat-card-actions {

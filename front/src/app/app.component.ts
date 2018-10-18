@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   private socket;
 
   constructor(public fb: FormBuilder) {
-    this.socket = io();
+    this.socket = io('http://localhost:8080');
     this.socket.on('rooms', (rooms: Room[]) => {
       this.rooms = rooms;
       console.log(this.rooms);
@@ -74,5 +74,10 @@ export class AppComponent implements OnInit {
       this.socket.emit('messageSent', message, this.player);
       this.messagesForm.get('message').reset();
     }
+  }
+
+  public openCloseMessages(): void {
+    document.getElementById('messages').style.height =
+      document.getElementById('messages').style.height === '400px' ? '50px' : '400px';
   }
 }
