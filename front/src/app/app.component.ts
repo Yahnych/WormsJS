@@ -3,6 +3,7 @@ import * as io from 'socket.io-client'
 import {Player, Room} from '../model';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WormsTeamEnum} from "../enum/worms-team-enum";
+import {environment} from "../environments/environment";
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit {
   private socket;
 
   constructor(public fb: FormBuilder) {
-    this.socket = io();
+    this.socket = io(environment.socketUrl);
     this.socket.on('rooms', (rooms: Room[]) => {
       this.rooms = rooms;
       console.log(this.rooms);
