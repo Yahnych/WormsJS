@@ -13,7 +13,7 @@
         <mat-option *ngFor="let room of rooms" [value]="room.id">{{room.name}} {{room.players.length}}/4</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button (click)="onSubmit()">PLAY!</button>
+    <button mat-raised-button (click)="onSubmit()">Connect</button>
   </div>
 </form>
 <worms-player-list
@@ -23,33 +23,42 @@
   [redTeam]="rooms[joinedRoom].redTeam"
   [blueTeam]="rooms[joinedRoom].blueTeam"
   (teamSelect)="onTeamSelect($event)"></worms-player-list>
-
-  <mat-card *ngIf="isLogged" id="messages">
-    <mat-card-header (click)="openCloseMessages()">
-      <mat-card-title>
-        <h3>Messages</h3>
-      </mat-card-title>
-    </mat-card-header>
-    <hr />
-    <mat-card-content>
-      <mat-list dense>
-        <mat-list-item *ngFor="let message of messages">
-          <p matLine>{{message}}</p>
-        </mat-list-item>
-      </mat-list>
-    </mat-card-content>
-    <mat-card-actions>
-      <form [formGroup]="messagesForm" (ngSubmit)="sendMessage()">
-        <mat-form-field>
-      <input type="text" matInput formControlName="message" placeholder="Entrez votre message ..." />
-        </mat-form-field>
-        <button mat-button type="submit">ENVOYER</button>
-      </form>
-    </mat-card-actions>
-  </mat-card>
-<!--<worms-game-->
-  <!--*ngIf="isPlaying"-->
-  <!--[player]="player"-->
-  <!--[players]="rooms[joinedRoom].players"-->
-  <!--[redTeam]="rooms[joinedRoom].redTeam"-->
-  <!--[blueTeam]="rooms[joinedRoom].blueTeam"></worms-game>-->
+<button *ngIf="isLogged && !isPlaying"
+        mat-raised-button
+        (click)="onPlayButton()"
+        id="playButton">PLAY NOW!
+</button>
+<mat-card *ngIf="isLogged" id="messages">
+  <mat-card-header (click)="openCloseMessages()">
+    <mat-card-title>
+      <h3>Messages</h3>
+    </mat-card-title>
+  </mat-card-header>
+  <hr/>
+  <mat-card-content>
+    <mat-list dense>
+      <!--<cdk-virtual-scroll-viewport itemSize="messages.length">-->
+      <!--<mat-list-item *cdkVirtualFor="let message of messages">-->
+        <!--<p matLine>{{message}}</p>-->
+      <!--</mat-list-item>-->
+      <!--</cdk-virtual-scroll-viewport>-->
+      <mat-list-item *ngFor="let message of messages">
+        <p matLine>{{message}}</p>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions *ngIf="isMessagesOpen">
+    <form [formGroup]="messagesForm" (ngSubmit)="sendMessage()">
+      <mat-form-field>
+        <input type="text" matInput formControlName="message" placeholder="Entrez votre message ..."/>
+      </mat-form-field>
+      <button mat-button type="submit">ENVOYER</button>
+    </form>
+  </mat-card-actions>
+</mat-card>
+<worms-game
+  *ngIf="isPlaying"
+  [player]="player"
+  [players]="rooms[joinedRoom].players"
+  [redTeam]="rooms[joinedRoom].redTeam"
+  [blueTeam]="rooms[joinedRoom].blueTeam"></worms-game>

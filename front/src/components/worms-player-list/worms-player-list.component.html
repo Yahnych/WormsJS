@@ -7,9 +7,15 @@
     </mat-card-header>
     <mat-card-content>
       <mat-list>
-        <mat-list-item *ngFor="let player of blueTeam">
+        <mat-list-item>
           <mat-icon matListIcon>person</mat-icon>
-          <h3 matLine> {{player.name}} </h3>
+          <h3 *ngIf="blueTeam[0]" matLine> {{blueTeam[0].name}} </h3>
+          <h3 *ngIf="!blueTeam[0]" matLine> EMPTY </h3>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>person</mat-icon>
+          <h3 *ngIf="blueTeam[1]" matLine> {{blueTeam[1].name}} </h3>
+          <h3 *ngIf="!blueTeam[1]" matLine> EMPTY </h3>
         </mat-list-item>
       </mat-list>
     </mat-card-content>
@@ -25,9 +31,15 @@
     </mat-card-header>
     <mat-card-content>
       <mat-list>
-        <mat-list-item *ngFor="let player of redTeam">
+        <mat-list-item>
           <mat-icon matListIcon>person</mat-icon>
-          <h3 matLine> {{player.name}} </h3>
+          <h3 *ngIf="redTeam[0]" matLine> {{redTeam[0].name}} </h3>
+          <h3 *ngIf="!redTeam[0]" matLine> EMPTY </h3>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon matListIcon>person</mat-icon>
+          <h3 *ngIf="redTeam[1]" matLine> {{redTeam[1].name}} </h3>
+          <h3 *ngIf="!redTeam[1]" matLine> EMPTY </h3>
         </mat-list-item>
       </mat-list>
     </mat-card-content>

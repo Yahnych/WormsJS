@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Player} from "../../model";
 
 @Component({
   selector: 'worms-game',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WormsGameComponent implements OnInit {
 
-  constructor() { }
+  @Input() player: Player;
+  @Input() players: Player[];
+  @Input() redTeam: Player[];
+  @Input() blueTeam: Player[];
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

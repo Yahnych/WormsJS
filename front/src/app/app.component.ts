@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   player: Player;
   public isLogged: boolean = false;
   public isPlaying: boolean = false;
+  public isMessagesOpen: boolean = true;
   public messages: string[] = ["Test", "test2"];
   private socket;
 
@@ -78,7 +79,8 @@ export class AppComponent implements OnInit {
   }
 
   public openCloseMessages(): void {
+    this.isMessagesOpen = !this.isMessagesOpen;
     document.getElementById('messages').style.height =
-      document.getElementById('messages').style.height === '400px' ? '50px' : '400px';
+      this.isMessagesOpen ? '400px' : '50px';
   }
 }

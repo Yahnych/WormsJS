@@ -23,8 +23,22 @@ export class WormsPlayerListComponent {
 
   }
 
-  onTeamSelect(team: WormsTeamEnum) {
-    this.teamSelect.emit(team);
+  public onTeamSelect(team: WormsTeamEnum) {
+    if (this.canJoinTeam(team)) {
+      this.teamSelect.emit(team);
+    }
+  }
+
+  public canJoinTeam(team: WormsTeamEnum): boolean {
+    switch (team) {
+      case WormsTeamEnum.BLUE_TEAM:
+        return this.blueTeam.length < 2 && !this.blueTeam.find((p: Player) => p.id === this.player.id);
+        break;
+      case WormsTeamEnum.RED_TEAM:
+        return this.redTeam.length < 2 && !this.redTeam.find((p: Player) => p.id === this.player.id);
+        break;
+    }
+    return false;
   }
 
 }
