@@ -36,14 +36,9 @@
   </mat-card-header>
   <hr/>
   <mat-card-content>
-    <mat-list dense>
-      <!--<cdk-virtual-scroll-viewport itemSize="messages.length">-->
-      <!--<mat-list-item *cdkVirtualFor="let message of messages">-->
-        <!--<p matLine>{{message}}</p>-->
-      <!--</mat-list-item>-->
-      <!--</cdk-virtual-scroll-viewport>-->
+    <mat-list id="messagesBox" dense>
       <mat-list-item *ngFor="let message of messages">
-        <p matLine>{{message}}</p>
+        <p>{{message}}</p>
       </mat-list-item>
     </mat-list>
   </mat-card-content>

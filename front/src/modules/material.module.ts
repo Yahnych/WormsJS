@@ -36,7 +36,6 @@ import {
   MatTooltipModule,
   MatTreeModule,
 } from '@angular/material';
-import {ScrollingModule} from '@angular/cdk/scrolling';
 @NgModule({
   exports: [
     MatAutocompleteModule,
@@ -74,7 +73,6 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
     MatToolbarModule,
     MatTooltipModule,
     MatTreeModule,
-    ScrollingModule
   ],
 })
 export class MaterialModule { }

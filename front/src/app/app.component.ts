@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   public isLogged: boolean = false;
   public isPlaying: boolean = false;
   public isMessagesOpen: boolean = true;
-  public messages: string[] = ["Test", "test2"];
+  public messages: string[] = [];
   private socket;
 
   constructor(public fb: FormBuilder) {
@@ -34,6 +34,11 @@ export class AppComponent implements OnInit {
 
   public ngOnInit() {
     this.initForm();
+  }
+
+  public scrollToBottom(): void {
+    var messagesBox = document.getElementById("messagesBox");
+    messagesBox.scrollTop = messagesBox.scrollHeight;
   }
 
   public initForm(): void {
@@ -59,6 +64,7 @@ export class AppComponent implements OnInit {
     });
     this.socket.on('messageReceived', (message: string) => {
       this.messages.push(message);
+      setTimeout(this.scrollToBottom, 10);
     });
   }
 

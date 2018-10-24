@@ -33,3 +33,9 @@
 #messages > mat-card-actions {
   right: 0;
 }
+
+#messagesBox {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 280px;
+}
