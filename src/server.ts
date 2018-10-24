@@ -48,6 +48,8 @@ io.on('connection', (socket: socketio.Socket) => {
             const socketRoomName: string = `room${id}`;
             socket.join(socketRoomName, () => {
 
+                io.to(socketRoomName).emit('newUser', joinedPlayer);
+
                 socket.on('disconnect', () => {
                     disconnectUser(id, joinedPlayer, joinedTeam);
                     io.emit('rooms', rooms);
@@ -92,7 +94,26 @@ io.on('connection', (socket: socketio.Socket) => {
                     io.to(socketRoomName).emit('roomUpdate', rooms[id]);
                 });
 
-                io.to(socketRoomName).emit('newUser', joinedPlayer);
+                socket.on('play', () => {
+                    if (rooms[id].blueTeam[0]) {
+                        rooms[id].blueTeam[0].position.x = 150;
+                        rooms[id].blueTeam[0].position.y = 500;
+                    }
+                    if (rooms[id].blueTeam[1]) {
+                        rooms[id].blueTeam[1].position.x = 50;
+                        rooms[id].blueTeam[1].position.y = 450;
+                    }
+                    if (rooms[id].redTeam[0]) {
+                        rooms[id].redTeam[0].position.x = 450;
+                        rooms[id].redTeam[0].position.y = 500;
+                    }
+                    if (rooms[id].redTeam[1]) {
+                        rooms[id].redTeam[1].position.x = 550;
+                        rooms[id].redTeam[1].position.y = 450;
+                    }
+                    io.to(socketRoomName).emit('roomUpdate', rooms[id]);
+                    setTimeout(() => io.to(socketRoomName).emit('gameStarted'), 1000);
+                });
 
                 socket.on('move', (direction: Direction) => {
                     let index = rooms[id].players.findIndex((p: Player) => {

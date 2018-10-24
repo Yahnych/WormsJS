@@ -73,7 +73,10 @@ export class AppComponent implements OnInit {
   }
 
   public onPlayButton(): void {
-    this.isPlaying = true;
+    this.socket.emit('play');
+    this.socket.on('gameStarted', () => {
+      this.isPlaying = true;
+    })
   }
 
   public sendMessage(): void {
