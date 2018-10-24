@@ -66,6 +66,9 @@ export class AppComponent implements OnInit {
       this.messages.push(message);
       setTimeout(this.scrollToBottom, 10);
     });
+    this.socket.on('gameStarted', () => {
+      this.isPlaying = true;
+    });
   }
 
   public onTeamSelect(team: WormsTeamEnum): void {
@@ -74,9 +77,6 @@ export class AppComponent implements OnInit {
 
   public onPlayButton(): void {
     this.socket.emit('play');
-    this.socket.on('gameStarted', () => {
-      this.isPlaying = true;
-    })
   }
 
   public sendMessage(): void {
