@@ -43,7 +43,7 @@
     </mat-list>
   </mat-card-content>
   <mat-card-actions *ngIf="isMessagesOpen">
-    <form [formGroup]="messagesForm" (ngSubmit)="sendMessage()">
+    <form [formGroup]="messagesForm" (ngSubmit)="sendMessage()" autocomplete="off">
       <mat-form-field>
         <input type="text" matInput formControlName="message" placeholder="Entrez votre message ..."/>
       </mat-form-field>
