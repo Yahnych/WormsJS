@@ -21,11 +21,11 @@ class WormsScene extends Phaser.Scene {
     console.log("create");
     this.gameComponent.blueTeam.forEach((blueWorm) => {
       this.add.image(blueWorm.position.x, blueWorm.position.y, 'worm-right');
-      this.add.text(blueWorm.position.x, blueWorm.position.y - 20, blueWorm.name);
+      this.add.text(blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name);
     });
     this.gameComponent.redTeam.forEach((redWorm) => {
       this.add.image(redWorm.position.x, redWorm.position.y, 'worm-left');
-      this.add.text(redWorm.position.x, redWorm.position.y - 20, redWorm.name);
+      this.add.text(redWorm.position.x, redWorm.position.y - 50, redWorm.name);
     });
   }
 
