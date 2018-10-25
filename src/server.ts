@@ -112,23 +112,24 @@ io.on('connection', (socket: socketio.Socket) => {
                         rooms[id].redTeam[1].position.y = 450;
                     }
                     io.to(socketRoomName).emit('roomUpdate', rooms[id]);
-                    setTimeout(() => io.to(socketRoomName).emit('gameStarted'), 1000);
-                });
 
-                socket.on('move', (direction: Direction) => {
-                    let index = rooms[id].players.findIndex((p: Player) => {
-                        return p.id === joinedPlayer.id;
+                    io.to(socketRoomName).emit('gameStarted');
+
+                    socket.on('move', (direction: Direction) => {
+                        const index = rooms[id].players.findIndex((p: Player) => {
+                            return p.id === joinedPlayer.id;
+                        });
+                        rooms[id].players[index].move(direction);
+                        io.to(socketRoomName).emit('roomUpdate', rooms[id]);
                     });
-                    rooms[id].players[index].move(direction);
-                    io.to(socketRoomName).emit('roomUpdate', rooms[id]);
-                });
 
-                socket.on('fire', (player: Player, weapon: Weapon, direction: Direction) => {
-                    io.to(socketRoomName).emit('fired');
-                });
+                    socket.on('fire', (player: Player, weapon: Weapon, direction: Direction) => {
+                        io.to(socketRoomName).emit('fired', player, weapon, direction);
+                    });
 
-                socket.on('weaponChange', (player: Player, weapon: Weapon) => {
-                    io.to(socketRoomName).emit('weaponChanged');
+                    socket.on('weaponChange', (player: Player, weapon: Weapon) => {
+                        io.to(socketRoomName).emit('weaponChanged', player, weapon);
+                    });
                 });
             });
         }

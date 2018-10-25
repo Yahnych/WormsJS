@@ -1,11 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Player} from "../../model";
+import {Component, EventEmitter, Input, OnInit} from '@angular/core';
+import {Player, Room} from "../../model";
 import * as Phaser from "phaser";
 
 class WormsScene extends Phaser.Scene {
   load: any;
   add: any;
   gameComponent: WormsGameComponent;
+  blueWorms = [];
+  redWorms = [];
+
   constructor(config, gameComponent) {
     super(config);
     this.gameComponent = gameComponent
@@ -20,16 +23,54 @@ class WormsScene extends Phaser.Scene {
   create() {
     console.log("create");
     this.gameComponent.blueTeam.forEach((blueWorm) => {
-      this.add.image(blueWorm.position.x, blueWorm.position.y, 'worm-right');
-      this.add.text(blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name);
+      this.blueWorms.push({
+        player: blueWorm,
+        image: new Phaser.GameObjects.Image(this, blueWorm.position.x, blueWorm.position.y, 'worm-right'),
+        text: new Phaser.GameObjects.Text(this, blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name, {})
+      });
     });
     this.gameComponent.redTeam.forEach((redWorm) => {
-      this.add.image(redWorm.position.x, redWorm.position.y, 'worm-left');
-      this.add.text(redWorm.position.x, redWorm.position.y - 50, redWorm.name);
+      this.redWorms.push({
+        player: redWorm,
+        image: new Phaser.GameObjects.Image(this, redWorm.position.x, redWorm.position.y, 'worm-left'),
+        text: new Phaser.GameObjects.Text(this, redWorm.position.x, redWorm.position.y - 50, redWorm.name, {})
+      });
     });
   }
 
   update() {
+
+  }
+
+  public updateGameState(room: Room) {
+    room.blueTeam.forEach((blueWorm: Player) => {
+      const index = this.blueWorms.findIndex((bw) => {
+        return bw.player.id === blueWorm.id;
+      });
+      if (index !== -1) {
+        this.blueWorms[index].player = blueWorm;
+      } else {
+        this.blueWorms.push({
+          player: blueWorm,
+          image: new Phaser.GameObjects.Image(this, blueWorm.position.x, blueWorm.position.y, 'worm-right'),
+          text: new Phaser.GameObjects.Text(this, blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name, {})
+        });
+      }
+    });
+    room.redTeam.forEach((redWorm: Player) => {
+      const index = this.redWorms.findIndex((rw) => {
+        return rw.player.id === redWorm.id;
+      });
+      if (index !== -1) {
+        this.redWorms[index].player = redWorm;
+      } else {
+        this.redWorms.push({
+          player: redWorm,
+          image: new Phaser.GameObjects.Image(this, redWorm.position.x, redWorm.position.y, 'worm-left'),
+          text: new Phaser.GameObjects.Text(this, redWorm.position.x, redWorm.position.y - 50, redWorm.name, {})
+        });
+      }
+    });
   }
 
 }
@@ -45,6 +86,7 @@ export class WormsGameComponent implements OnInit {
   @Input() players: Player[];
   @Input() redTeam: Player[];
   @Input() blueTeam: Player[];
+  @Input() gameStateUpdate: EventEmitter<any>;
 
   config: GameConfig = {};
   game: Phaser.Game;
@@ -61,6 +103,9 @@ export class WormsGameComponent implements OnInit {
     });
     this.config.scene = new WormsScene(this.config, this);
     this.game = new Phaser.Game(this.config);
+    this.gameStateUpdate.subscribe((room: Room) => {
+      this.config.scene.updateGameState(room);
+    });
   }
 
 }

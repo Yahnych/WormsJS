@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, EventEmitter, OnInit} from '@angular/core'
 import * as io from 'socket.io-client'
-import {Player, Room} from '../model';
+import {Direction, Player, Room, Weapon} from '../model';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {WormsTeamEnum} from "../enum/worms-team-enum";
 import {environment} from "../environments/environment";
@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   public isPlaying: boolean = false;
   public isMessagesOpen: boolean = true;
   public messages: string[] = [];
+  public gameStateUpdate: EventEmitter<any> = new EventEmitter();
   private socket;
 
   constructor(public fb: FormBuilder) {
@@ -61,6 +62,13 @@ export class AppComponent implements OnInit {
     this.isLogged = true;
     this.socket.on('roomUpdate', (room: Room) => {
       this.rooms[room.id] = room;
+      if (this.isPlaying) {
+        this.gameStateUpdate.emit(this.rooms[room.id]);
+      }
+    });
+    this.socket.on('userDisconnected', (user: Player) => {
+      this.messages.push(`${user.name} just disconnected from the game.`);
+      setTimeout(this.scrollToBottom, 10);
     });
     this.socket.on('messageReceived', (message: string) => {
       this.messages.push(message);
@@ -68,6 +76,14 @@ export class AppComponent implements OnInit {
     });
     this.socket.on('gameStarted', () => {
       this.isPlaying = true;
+
+      this.socket.on('fired', (player: Player, weapon: Weapon, direction: Direction) => {
+        console.log(`${player.name} fired using ${weapon.name} on with a strength of ${direction.strength}`);
+      });
+
+      this.socket.on('weaponChanged', (player: Player, weapon: Weapon) => {
+        console.log(`${player.name} changed weapon to ${weapon.name}`);
+      });
     });
   }
 
@@ -80,7 +96,7 @@ export class AppComponent implements OnInit {
   }
 
   public sendMessage(): void {
-    let message: string = this.messagesForm.get('message').value;
+    const message: string = this.messagesForm.get('message').value;
     if (message.length > 0) {
       this.socket.emit('messageSent', message, this.player);
       this.messagesForm.get('message').reset();
