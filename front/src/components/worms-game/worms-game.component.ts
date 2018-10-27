@@ -3,8 +3,6 @@ import {Player, Room} from "../../model";
 import * as Phaser from "phaser";
 
 class WormsScene extends Phaser.Scene {
-  load: any;
-  add: any;
   gameComponent: WormsGameComponent;
   blueWorms = [];
   redWorms = [];
@@ -23,23 +21,23 @@ class WormsScene extends Phaser.Scene {
   create() {
     console.log("create");
     this.gameComponent.blueTeam.forEach((blueWorm) => {
+      console.log("I'm blue tapetitapeta");
       this.blueWorms.push({
         player: blueWorm,
-        image: new Phaser.GameObjects.Image(this, blueWorm.position.x, blueWorm.position.y, 'worm-right'),
-        text: new Phaser.GameObjects.Text(this, blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name, {})
+        image: this.add.image(blueWorm.position.x, blueWorm.position.y, 'worm-right'),
+        text: this.add.text(blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name)
       });
     });
     this.gameComponent.redTeam.forEach((redWorm) => {
       this.redWorms.push({
         player: redWorm,
-        image: new Phaser.GameObjects.Image(this, redWorm.position.x, redWorm.position.y, 'worm-left'),
-        text: new Phaser.GameObjects.Text(this, redWorm.position.x, redWorm.position.y - 50, redWorm.name, {})
+        image: this.add.image(redWorm.position.x, redWorm.position.y, 'worm-left'),
+        text: this.add.text(redWorm.position.x, redWorm.position.y - 50, redWorm.name)
       });
     });
   }
 
   update() {
-
   }
 
   public updateGameState(room: Room) {
@@ -49,11 +47,11 @@ class WormsScene extends Phaser.Scene {
       });
       if (index !== -1) {
         this.blueWorms[index].player = blueWorm;
-      } else {
+      } else if (blueWorm.position.x !== 0 && blueWorm.position.y !== 0) {
         this.blueWorms.push({
           player: blueWorm,
-          image: new Phaser.GameObjects.Image(this, blueWorm.position.x, blueWorm.position.y, 'worm-right'),
-          text: new Phaser.GameObjects.Text(this, blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name, {})
+          image: this.add.image(blueWorm.position.x, blueWorm.position.y, 'worm-right'),
+          text: this.add.text(blueWorm.position.x, blueWorm.position.y - 50, blueWorm.name)
         });
       }
     });
@@ -63,11 +61,11 @@ class WormsScene extends Phaser.Scene {
       });
       if (index !== -1) {
         this.redWorms[index].player = redWorm;
-      } else {
+      } else if (redWorm.position.x !== 0 && redWorm.position.y !== 0) {
         this.redWorms.push({
           player: redWorm,
-          image: new Phaser.GameObjects.Image(this, redWorm.position.x, redWorm.position.y, 'worm-left'),
-          text: new Phaser.GameObjects.Text(this, redWorm.position.x, redWorm.position.y - 50, redWorm.name, {})
+          image: this.add.image(redWorm.position.x, redWorm.position.y, 'worm-left'),
+          text: this.add.text(redWorm.position.x, redWorm.position.y - 50, redWorm.name)
         });
       }
     });
@@ -104,7 +102,7 @@ export class WormsGameComponent implements OnInit {
     this.config.scene = new WormsScene(this.config, this);
     this.game = new Phaser.Game(this.config);
     this.gameStateUpdate.subscribe((room: Room) => {
-      this.config.scene.updateGameState(room);
+      (this.config.scene as WormsScene).updateGameState(room);
     });
   }
 
